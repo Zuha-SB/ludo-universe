@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ludo Universe - Accessible Ludo Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Skip to main content link for keyboard users -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <main id="main-content" class="container">
+        <header>
+            <h1 id="game-title" tabindex="0"><span data-i18n="gameTitle">🎲 Ludo Universe</span></h1>
+            <p id="game-subtitle" tabindex="0"><span data-i18n="gameSubtitle">An accessible multiplayer Ludo experience</span></p>
+        </header>
+
+        <!-- Language Selection -->
+        <section class="config-section" aria-labelledby="language-heading">
+            <h2 id="language-heading">
+                <span data-i18n="language">Language</span>
+            </h2>
+            <div class="form-group">
+                <label for="language-select" class="visually-hidden" data-i18n="selectLanguage">Select your preferred language</label>
+                <select id="language-select" class="select-input" aria-describedby="language-desc">
+                    <option value="en">English</option>
+                    <option value="hi">हिन्दी (Hindi)</option>
+                    <option value="ar">العربية (Arabic)</option>
+                </select>
+                <p id="language-desc" class="helper-text" data-i18n="languageHelper">Choose your preferred language for the game</p>
+            </div>
+        </section>
+
+        <form id="game-config-form" novalidate>
+
+            <!-- Number of Bots -->
+            <section class="config-section" aria-labelledby="bots-heading">
+                <h2 id="bots-heading">
+                    <span data-i18n="numberOfBots">Number of Bots</span>
+                </h2>
+                <div class="form-group">
+                    <label for="bot-count" class="visually-hidden" data-i18n="selectBotCount">Select how many computer-controlled players</label>
+                    <select id="bot-count" class="select-input" aria-describedby="bot-count-desc">
+                        <option value="0">0</option>
+                    </select>
+                    <p id="bot-count-desc" class="helper-text" data-i18n="botHelper">Computer-controlled players will fill remaining spots</p>
+                </div>
+            </section>
+
+            <!-- Player Configuration -->
+            <section id="player-config-section" class="config-section" aria-labelledby="player-config-heading">
+                <h2 id="player-config-heading">
+                    <span data-i18n="playerConfiguration">Player Configuration</span>
+                </h2>
+                <div id="players-container" class="players-container">
+                    <!-- Player cards will be dynamically generated here -->
+                </div>
+            </section>
+
+            <!-- Error Messages -->
+            <div id="error-container" class="error-container" role="alert" aria-live="assertive" aria-atomic="true">
+                <!-- Errors will be displayed here -->
+            </div>
+
+            <!-- Start Game Button -->
+            <div class="form-actions">
+                <button type="submit" id="start-game-btn" class="btn-primary" aria-describedby="start-game-desc">
+                    <span data-i18n="startGame">Start Game</span>
+                </button>
+                <p id="start-game-desc" class="visually-hidden" data-i18n="startGameDesc">Begin playing Ludo with your current configuration</p>
+            </div>
+        </form>
+
+        <!-- Accessibility Features Toggle -->
+        <section class="config-section accessibility-section" aria-labelledby="accessibility-heading">
+            <h2 id="accessibility-heading">
+                <span data-i18n="accessibilityOptions">Accessibility Options</span>
+            </h2>
+            <div class="accessibility-options">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="high-contrast" class="checkbox-input">
+                    <span data-i18n="highContrast">High Contrast Mode</span>
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" id="screen-reader-mode" class="checkbox-input" checked>
+                    <span data-i18n="screenReaderMode">Enhanced Screen Reader Support</span>
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" id="keyboard-hints" class="checkbox-input" checked>
+                    <span data-i18n="keyboardHints">Show Keyboard Shortcuts</span>
+                </label>
+            </div>
+        </section>
+    </main>
+
+    <script src="translations.js"></script>
+    <script src="menu.js"></script>
+</body>
+</html>
