@@ -80,10 +80,12 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background-attachment: fixed;
     min-height: 100vh;
+    height: 100vh;
     padding: var(--spacing-sm);
     color: var(--text-primary);
-    overflow-y: auto;
+    overflow: hidden;
 }
 
 /* Skip Link for Accessibility */
