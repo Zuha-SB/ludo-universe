@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupEventListeners();
     renderPlayerConfig();
     updateTranslations();
+    initializeMusic();
 });
 
 // Setup all event listeners
@@ -263,10 +264,9 @@ function validateAndStartGame() {
     
     // Announce success
     announceToScreenReader('Game starting!');
-    
-    // Navigate to game page (will be created later)
-    alert('Game configuration saved! Game page will be created in next step.');
-    console.log('Game Config:', config);
+
+    // Navigate to game page
+    window.location.href = 'game.html';
 }
 
 // Display validation errors
@@ -294,3 +294,54 @@ function displayErrors(errors) {
 
 // Initialize the page
 updateBotCountOptions();
+
+// Music control functionality
+function initializeMusic() {
+    const audio = document.getElementById('menu-music');
+    const toggleBtn = document.getElementById('music-toggle');
+    const musicIcon = document.querySelector('.music-icon');
+
+    let isMuted = false;
+
+    // Try to autoplay music
+    // Note: Some browsers require user interaction first
+    const playPromise = audio.play();
+
+    if (playPromise !== undefined) {
+        playPromise.then(() => {
+            // Autoplay started successfully
+            console.log('Music started playing');
+        }).catch(error => {
+            // Autoplay was prevented
+            console.log('Autoplay prevented, waiting for user interaction');
+            isMuted = true;
+            musicIcon.textContent = '🔇';
+            toggleBtn.setAttribute('aria-label', 'Play background music');
+        });
+    }
+
+    // Toggle music on button click
+    toggleBtn.addEventListener('click', () => {
+        if (isMuted || audio.paused) {
+            audio.play();
+            musicIcon.textContent = '🔊';
+            toggleBtn.setAttribute('aria-label', 'Mute background music');
+            isMuted = false;
+            announceToScreenReader('Music playing');
+        } else {
+            audio.pause();
+            musicIcon.textContent = '🔇';
+            toggleBtn.setAttribute('aria-label', 'Play background music');
+            isMuted = true;
+            announceToScreenReader('Music muted');
+        }
+    });
+
+    // Also allow keyboard control
+    toggleBtn.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            toggleBtn.click();
+        }
+    });
+}

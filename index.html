@@ -4,12 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ludo Universe - Accessible Ludo Game</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Exo+2:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <!-- Skip to main content link for keyboard users -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
-    
+
+    <!-- Background Music -->
+    <audio id="menu-music" loop>
+        <source src="ludo_quest_menu.wav" type="audio/wav">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Music Control Button -->
+    <button id="music-toggle" class="music-toggle" aria-label="Toggle background music">
+        <span class="music-icon">🔊</span>
+    </button>
+
     <main id="main-content" class="container">
         <header>
             <h1 id="game-title" tabindex="0"><span data-i18n="gameTitle">🎲 Ludo Universe</span></h1>

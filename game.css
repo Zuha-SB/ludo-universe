@@ -1,0 +1,573 @@
+:root {
+    /* Cosmic Elements Color Palette */
+    --nebula-purple: #b967ff;
+    --plasma-blue: #05d9e8;
+    --solar-gold: #ffd700;
+    --comet-white: #f0f0f0;
+
+    /* Space Theme Colors */
+    --space-bg: #0a0e27;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --text-primary: #e8f4f8;
+    --text-secondary: #a0c4d4;
+    --accent-cyan: #00d9ff;
+    --accent-gold: #ffd700;
+
+    /* Shadows and Glows */
+    --glow-nebula: 0 0 20px rgba(185, 103, 255, 0.6);
+    --glow-plasma: 0 0 20px rgba(5, 217, 232, 0.6);
+    --glow-solar: 0 0 20px rgba(255, 215, 0, 0.6);
+    --glow-comet: 0 0 20px rgba(240, 240, 240, 0.6);
+    --glow-cyan: 0 0 20px rgba(0, 217, 255, 0.6);
+
+    /* Fonts */
+    --font-title: 'Orbitron', sans-serif;
+    --font-button: 'Exo 2', sans-serif;
+    --font-body: 'Inter', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-body);
+    background: url('https://v3b.fal.media/files/b/koala/FohSHIa8XO4C4_w3N3hEQ.png') center/cover no-repeat fixed;
+    min-height: 100vh;
+    color: var(--text-primary);
+    overflow: hidden;
+    position: relative;
+}
+
+/* Darkening overlay */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 14, 39, 0.7);
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Scanline effect */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.15),
+        rgba(0, 0, 0, 0.15) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.2;
+}
+
+/* Skip Link */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--accent-cyan);
+    color: var(--space-bg);
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    z-index: 100;
+}
+
+.skip-link:focus {
+    top: 1rem;
+    left: 1rem;
+}
+
+/* Game Container */
+.game-container {
+    position: relative;
+    z-index: 1;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
+}
+
+/* Header */
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 2px solid var(--glass-border);
+    border-radius: 1rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37), var(--glow-cyan);
+}
+
+.game-title {
+    font-family: var(--font-title);
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--text-primary);
+    text-shadow: var(--glow-cyan);
+    letter-spacing: 0.1em;
+}
+
+.game-info {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.current-player {
+    font-family: var(--font-button);
+    font-size: 1.1rem;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.label {
+    color: var(--text-secondary);
+}
+
+.player-name {
+    color: var(--accent-cyan);
+    font-weight: 700;
+    text-shadow: var(--glow-cyan);
+}
+
+.icon-btn {
+    background: rgba(0, 217, 255, 0.1);
+    border: 2px solid var(--accent-cyan);
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    width: 45px;
+    height: 45px;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.icon-btn:hover {
+    background: rgba(0, 217, 255, 0.2);
+    box-shadow: var(--glow-cyan);
+    transform: scale(1.05);
+}
+
+/* Game Board Container */
+.game-board-container {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1.5rem;
+    overflow: hidden;
+}
+
+/* Ludo Board */
+.ludo-board {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 3px solid var(--glass-border);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 1rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37), var(--glow-cyan);
+    position: relative;
+}
+
+/* Player Zones */
+.player-zone {
+    border-radius: 1rem;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    border: 3px solid;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.zone-nebula {
+    border-color: var(--nebula-purple);
+    box-shadow: inset var(--glow-nebula);
+}
+
+.zone-plasma {
+    border-color: var(--plasma-blue);
+    box-shadow: inset var(--glow-plasma);
+}
+
+.zone-solar {
+    border-color: var(--solar-gold);
+    box-shadow: inset var(--glow-solar);
+}
+
+.zone-comet {
+    border-color: var(--comet-white);
+    box-shadow: inset var(--glow-comet);
+}
+
+.player-zone:hover {
+    transform: scale(1.02);
+}
+
+.zone-header h2 {
+    font-family: var(--font-title);
+    font-size: 1.3rem;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 0.05em;
+}
+
+.zone-nebula h2 {
+    color: var(--nebula-purple);
+    text-shadow: var(--glow-nebula);
+}
+
+.zone-plasma h2 {
+    color: var(--plasma-blue);
+    text-shadow: var(--glow-plasma);
+}
+
+.zone-solar h2 {
+    color: var(--solar-gold);
+    text-shadow: var(--glow-solar);
+}
+
+.zone-comet h2 {
+    color: var(--comet-white);
+    text-shadow: var(--glow-comet);
+}
+
+/* Home Area (where pieces start) */
+.home-area {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 0.75rem;
+}
+
+/* Game Pieces */
+.piece {
+    aspect-ratio: 1;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    border: 3px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.piece::before {
+    content: '';
+    position: absolute;
+    width: 40%;
+    height: 40%;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    top: 20%;
+    left: 20%;
+}
+
+/* Nebula Purple Pieces */
+.piece[data-player="0"] {
+    background: radial-gradient(circle at 30% 30%, var(--nebula-purple), #8b45dd);
+    border-color: var(--nebula-purple);
+    box-shadow: var(--glow-nebula);
+}
+
+/* Plasma Blue Pieces */
+.piece[data-player="1"] {
+    background: radial-gradient(circle at 30% 30%, var(--plasma-blue), #04a8b8);
+    border-color: var(--plasma-blue);
+    box-shadow: var(--glow-plasma);
+}
+
+/* Solar Gold Pieces */
+.piece[data-player="2"] {
+    background: radial-gradient(circle at 30% 30%, var(--solar-gold), #e6be00);
+    border-color: var(--solar-gold);
+    box-shadow: var(--glow-solar);
+}
+
+/* Comet White Pieces */
+.piece[data-player="3"] {
+    background: radial-gradient(circle at 30% 30%, var(--comet-white), #d0d0d0);
+    border-color: var(--comet-white);
+    box-shadow: var(--glow-comet);
+}
+
+.piece:hover {
+    transform: scale(1.15);
+}
+
+.piece:focus {
+    outline: 3px solid var(--accent-cyan);
+    outline-offset: 3px;
+}
+
+.piece.active {
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+/* Dice Panel */
+.dice-panel {
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.dice-container {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 2px solid var(--glass-border);
+    border-radius: 1rem;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37), var(--glow-cyan);
+}
+
+.dice {
+    width: 120px;
+    height: 120px;
+    background: linear-gradient(135deg, rgba(0, 217, 255, 0.2), rgba(185, 103, 255, 0.2));
+    border: 3px solid var(--accent-cyan);
+    border-radius: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-title);
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: var(--glow-cyan);
+    text-shadow: var(--glow-cyan);
+}
+
+.dice:hover {
+    transform: scale(1.05) rotate(5deg);
+    box-shadow: 0 0 30px rgba(0, 217, 255, 0.8);
+}
+
+.dice.rolling {
+    animation: roll 0.5s ease-in-out;
+}
+
+@keyframes roll {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(90deg); }
+    50% { transform: rotate(180deg); }
+    75% { transform: rotate(270deg); }
+}
+
+.roll-btn {
+    width: 100%;
+    padding: 1rem 1.5rem;
+    font-family: var(--font-button);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    background: rgba(46, 26, 71, 0.6);
+    border: 2px solid var(--accent-cyan);
+    border-radius: 0.75rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: all 0.3s ease;
+    box-shadow: var(--glow-cyan);
+}
+
+.roll-btn:hover {
+    background: rgba(0, 217, 255, 0.2);
+    box-shadow: 0 0 30px rgba(0, 217, 255, 0.8);
+    transform: translateY(-2px);
+}
+
+.roll-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* Player Status */
+.player-status {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 2px solid var(--glass-border);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+}
+
+.player-status h3 {
+    font-family: var(--font-title);
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+    text-align: center;
+}
+
+.players-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.player-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 0.5rem;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.player-item.active {
+    border-color: var(--accent-cyan);
+    box-shadow: var(--glow-cyan);
+}
+
+.player-indicator {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid;
+}
+
+.player-item-name {
+    flex: 1;
+    font-weight: 600;
+}
+
+/* Game Controls */
+.game-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.control-btn {
+    padding: 0.875rem 1.5rem;
+    font-family: var(--font-button);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    background: rgba(46, 26, 71, 0.6);
+    border: 2px solid var(--accent-cyan);
+    border-radius: 0.75rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: all 0.3s ease;
+}
+
+.control-btn:hover {
+    background: rgba(0, 217, 255, 0.2);
+    box-shadow: var(--glow-cyan);
+    transform: translateY(-2px);
+}
+
+.control-btn.danger {
+    border-color: #ff006e;
+    box-shadow: 0 0 15px rgba(255, 0, 110, 0.4);
+}
+
+.control-btn.danger:hover {
+    background: rgba(255, 0, 110, 0.2);
+    box-shadow: 0 0 25px rgba(255, 0, 110, 0.6);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .game-board-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr auto;
+    }
+
+    .dice-panel {
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .dice-container,
+    .player-status {
+        flex: 1;
+        min-width: 250px;
+    }
+
+    .game-controls {
+        width: 100%;
+        flex-direction: row;
+    }
+}
+
+@media (max-width: 768px) {
+    .game-title {
+        font-size: 1.5rem;
+    }
+
+    .game-header {
+        padding: 0.75rem 1rem;
+    }
+
+    .ludo-board {
+        padding: 1rem;
+        gap: 0.5rem;
+    }
+
+    .player-zone {
+        padding: 1rem;
+    }
+
+    .zone-header h2 {
+        font-size: 1rem;
+    }
+
+    .dice {
+        width: 100px;
+        height: 100px;
+        font-size: 2.5rem;
+    }
+}
