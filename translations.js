@@ -105,10 +105,35 @@ function updateTranslations() {
         element.textContent = t(key);
     });
     
+    // Update player card headings (Player 1, Player 2, etc)
+    const playerCards = document.querySelectorAll('.player-card h3');
+    playerCards.forEach((heading, index) => {
+        heading.textContent = `${t('player')} ${index + 1}`;
+    });
+    
+    // Update "Name" labels
+    const nameLabels = document.querySelectorAll('.player-card-field label.player-card-label');
+    nameLabels.forEach(label => {
+        label.textContent = t('name');
+    });
+    
+    // Update "Color" labels
+    const colorLabels = document.querySelectorAll('.player-card-field p.player-card-label');
+    colorLabels.forEach(label => {
+        label.textContent = t('color');
+    });
+    
     // Update placeholders
     const playerNameInputs = document.querySelectorAll('.player-name-input');
     playerNameInputs.forEach((input, index) => {
         input.placeholder = `${t('enterName')} (${t('player')} ${index + 1})`;
+    });
+    
+    // Update color button aria-labels
+    const colorButtons = document.querySelectorAll('.color-button');
+    colorButtons.forEach(button => {
+        const color = button.getAttribute('data-color');
+        button.setAttribute('aria-label', `${t(color)} ${t('color')}`);
     });
     
     // Update document language and direction
@@ -126,6 +151,11 @@ function updateTranslations() {
 function changeLanguage(lang) {
     currentLanguage = lang;
     updateTranslations();
+    
+    // Re-render player cards if they exist (defined in menu.js)
+    if (typeof renderPlayerConfig === 'function') {
+        renderPlayerConfig();
+    }
     
     // Announce language change to screen readers
     announceToScreenReader(`${t('language')} ${t('selectLanguage')}`);

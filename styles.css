@@ -127,6 +127,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
     background: linear-gradient(135deg, var(--bg-deep-space-start) 0%, var(--bg-deep-space-end) 100%);
     min-height: 100vh;
+    height: 100vh;
     padding: var(--spacing-sm);
     color: var(--text-primary);
     overflow-y: auto;
